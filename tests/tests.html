@@ -95,6 +95,7 @@
                 expect(w2.op.isNum(regex)).toBe(false);
                 expect(w2.op.isNum(date)).toBe(false);
                 expect(w2.op.isNum(func)).toBe(false);
+                expect(w2.op.isNum("123.45")).toBe(false);
             });
             it('number (whole)', () => {
                 expect(w2.op.isWholeNum()).toBe(false);
