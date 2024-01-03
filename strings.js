@@ -1,8 +1,8 @@
 // w2.str:
 
-// alphaTrim( t, p (optional)) - non alpha trim of start and end as below
-// alphaTrimStart( t) - trim non alpha characters from start of t
-// alphaTrimEnd( t, p (optional)) - trim non alpha characters from end of t
+// naTrim( t, p (optional)) - non alpha trim of start and end as below
+// naTrimS( t) - trim non alpha characters from start of t
+// naTrimE( t, p (optional)) - trim non alpha characters from end of t
 // p - true/false - default true - allow punctuation ? ! .
 
 // last( str) - return last character of str
@@ -50,33 +50,33 @@
 // splitAt( s, i) - splits string s at position i
 // i is string - splits either side of string
 // i is number - splits at that index
-// Returns: [ left, right]
+// Returns: [left, right]
 
 
 window[window['__wheel2_locator']].str.load(new class {
 	#w2 = window[window['__wheel2_locator']];
 
-	alphaTrim(t, p) { return this.alphaTrimStart(this.alphaTrimEnd(t, p)); };
-	alphaTrimStart(t) { return t.replace(/^[^\w0-9]+/, ""); };
-	alphaTrimEnd(t, p = true) { return t.replace(p ? /[^\w0-9!?.]+$/ : /[^\w0-9]+$/, ""); };
+	naTrim(t, p) { return this.naTrimS(this.naTrimE(t, p)); };
+	naTrimS(t) { return t.replace(/^[^\w0-9]+/, ""); };
+	naTrimE(t, p = true) { return t.replace(p ? /[^\w0-9!?.]+$/ : /[^\w0-9]+$/, ""); };
 
-	last(str) { return this.right(str, 1); }
-	left(str, n) { return str.substr(0, n >= 0 ? n : str.length + n); }
-	right(str, n) { return str.substr(n >= 0 ? str.length - n : -n); }
-	mid(str, s, n) { return str.substring(s, (n >= 0 ? s : str.length) + n); }
+	last(str) { return str[str.length - 1]; }
+	left(str, n) { return str.slice(0, n); }
+	right(str, n) { return str.slice(-n); }
+	mid(str, s, n) { return str.slice(s, (n >= 0 ? s + n : n)); }
 
 	before(str, s) { return str.substr(0, str.indexOf(s)) || str; }
 	after(str, s) { return str.indexOf(s) != -1 ? str.substr(str.indexOf(s) + s.length) : ""; }
 
-	starts(str, s) { return str.indexOf(s) == 0; }
-	ends(str, e) { return this.right(str, e.length) === e; }
+	starts(str, s) { return str.startsWith(s); }
+	ends(str, e) { return str.endsWith(s); }
 	count(str, s) { return str.split(s).length - 1; }
 
 	deQuote(s) {
 		let str = s.trim();
 
 		if (["\"", "'"].includes(str[0]) && str[0] == this.last(str)) {
-			str = this.mid(str, 1, -1).trim();
+			str = str.slice(1, -1).trim();
 		}
 
 		return str;

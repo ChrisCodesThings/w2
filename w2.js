@@ -9,9 +9,9 @@
 
 // modules: bitmask up to 0x1ff (loads all modules by default)
 
-// mode: (defaults to instant)
-//  - instant, injects immediately into HTML. Available immediately.
-//  - async, available at onload event.
+// mode:
+//  - instant, injects immediately into HTML. Available immediately but causes warnings on load.
+//  - async (default), available at onload event.
 
 // namespace: name of the global variable to initialize (defaults to w2)
 
@@ -41,7 +41,7 @@
     let tag;
 
     for (let s of document.getElementsByTagName("script")) {
-        if (s.src.indexOf("w2.js") != -1) {
+        if (s.src.indexOf("/w2.") != -1) {
             tag = s;
         }
     }
@@ -120,7 +120,7 @@
 
     const paramList = tag.src.split("?")[1];
     let name = "w2";
-    let mode = "instant";
+    let mode = "async";
 
     if (paramList) {
         for (let arg of paramList.split("&")) {
@@ -189,6 +189,8 @@
     const nextTag = tag.nextSibling;
     const modLoaded = [];
     const url = tag.src.substring(0, tag.src.lastIndexOf("/") + 1);
+    const extEnd = (tag.src.lastIndexOf("?") == -1 ? tag.src.length : tag.src.lastIndexOf("?"));
+    const ext = tag.src.substring(url.length + 2, extEnd);
 
     for (let m of modRequested) {
         if (modLoaded.includes(m)) {
@@ -197,7 +199,7 @@
 
         modLoaded.push(m);
 
-        const src = url + m + ".js";
+        const src = url + m + ext;
 
         if (mode === "instant") {
             document.write("<script src='" + src + "'></script>");

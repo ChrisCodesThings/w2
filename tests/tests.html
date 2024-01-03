@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="jasmine-standalone-5.1.1/lib/jasmine-5.1.1/jasmine.css">
+
+    <script src="jasmine-standalone-5.1.1/lib/jasmine-5.1.1/jasmine.js"></script>
+    <script src="jasmine-standalone-5.1.1/lib/jasmine-5.1.1/jasmine-html.js"></script>
+    <script src="jasmine-standalone-5.1.1/lib/jasmine-5.1.1/boot0.js"></script>
+    <script src="jasmine-standalone-5.1.1/lib/jasmine-5.1.1/boot1.js"></script>
+
+    <script>jasmine.getEnv().configure({ random: false });</script>
+
+    <script src='../w2.js'></script>
+    <script src='sampledata.js'></script>
+    <title>Wheel 2 Testing</title>
+</head>
+
+<body>
+    <h1>Wheel 2 Testing</h1>
+    <h2>Operators</h2>
+    <script>
+        describe('Is something....?', () => {
+            it('undefined', () => {
+                expect(w2.op.isUndef()).toBe(true);
+                expect(w2.op.isUndef(_undefined)).toBe(true);
+                expect(w2.op.isUndef(_null)).toBe(false);
+                expect(w2.op.isUndef(_false)).toBe(false);
+                expect(w2.op.isUndef(bool)).toBe(false);
+                expect(w2.op.isUndef(numberFloat)).toBe(false);
+                expect(w2.op.isUndef(numberWhole)).toBe(false);
+                expect(w2.op.isUndef(string)).toBe(false);
+                expect(w2.op.isUndef(arr)).toBe(false);
+                expect(w2.op.isUndef(obj)).toBe(false);
+                expect(w2.op.isUndef(regex)).toBe(false);
+                expect(w2.op.isUndef(date)).toBe(false);
+                expect(w2.op.isUndef(func)).toBe(false);
+            });
+            it('null', () => {
+                expect(w2.op.isNull()).toBe(false);
+                expect(w2.op.isNull(_undefined)).toBe(false);
+                expect(w2.op.isNull(_null)).toBe(true);
+                expect(w2.op.isNull(_false)).toBe(false);
+                expect(w2.op.isNull(bool)).toBe(false);
+                expect(w2.op.isNull(numberFloat)).toBe(false);
+                expect(w2.op.isNull(numberWhole)).toBe(false);
+                expect(w2.op.isNull(string)).toBe(false);
+                expect(w2.op.isNull(arr)).toBe(false);
+                expect(w2.op.isNull(obj)).toBe(false);
+                expect(w2.op.isNull(regex)).toBe(false);
+                expect(w2.op.isNull(date)).toBe(false);
+                expect(w2.op.isNull(func)).toBe(false);
+            });
+            it('nullish', () => {
+                expect(w2.op.isNullish()).toBe(true);
+                expect(w2.op.isNullish(_undefined)).toBe(true);
+                expect(w2.op.isNullish(_null)).toBe(true);
+                expect(w2.op.isNullish(_false)).toBe(false);
+                expect(w2.op.isNullish(bool)).toBe(false);
+                expect(w2.op.isNullish(numberFloat)).toBe(false);
+                expect(w2.op.isNullish(numberWhole)).toBe(false);
+                expect(w2.op.isNullish(string)).toBe(false);
+                expect(w2.op.isNullish(arr)).toBe(false);
+                expect(w2.op.isNullish(obj)).toBe(false);
+                expect(w2.op.isNullish(regex)).toBe(false);
+                expect(w2.op.isNullish(date)).toBe(false);
+                expect(w2.op.isNullish(func)).toBe(false);
+            });
+            it('boolean', () => {
+                expect(w2.op.isBool()).toBe(false);
+                expect(w2.op.isBool(_undefined)).toBe(false);
+                expect(w2.op.isBool(_null)).toBe(false);
+                expect(w2.op.isBool(_false)).toBe(true);
+                expect(w2.op.isBool(bool)).toBe(true);
+                expect(w2.op.isBool(numberFloat)).toBe(false);
+                expect(w2.op.isBool(numberWhole)).toBe(false);
+                expect(w2.op.isBool(string)).toBe(false);
+                expect(w2.op.isBool(arr)).toBe(false);
+                expect(w2.op.isBool(obj)).toBe(false);
+                expect(w2.op.isBool(regex)).toBe(false);
+                expect(w2.op.isBool(date)).toBe(false);
+                expect(w2.op.isBool(func)).toBe(false);
+            });
+            it('number (float)', () => {
+                expect(w2.op.isNum()).toBe(false);
+                expect(w2.op.isNum(_undefined)).toBe(false);
+                expect(w2.op.isNum(_null)).toBe(false);
+                expect(w2.op.isNum(_false)).toBe(false);
+                expect(w2.op.isNum(bool)).toBe(false);
+                expect(w2.op.isNum(numberFloat)).toBe(true);
+                expect(w2.op.isNum(numberWhole)).toBe(true);
+                expect(w2.op.isNum(string)).toBe(false);
+                expect(w2.op.isNum(arr)).toBe(false);
+                expect(w2.op.isNum(obj)).toBe(false);
+                expect(w2.op.isNum(regex)).toBe(false);
+                expect(w2.op.isNum(date)).toBe(false);
+                expect(w2.op.isNum(func)).toBe(false);
+            });
+            it('number (whole)', () => {
+                expect(w2.op.isWholeNum()).toBe(false);
+                expect(w2.op.isWholeNum(_undefined)).toBe(false);
+                expect(w2.op.isWholeNum(_null)).toBe(false);
+                expect(w2.op.isWholeNum(_false)).toBe(false);
+                expect(w2.op.isWholeNum(bool)).toBe(false);
+                expect(w2.op.isWholeNum(numberFloat)).toBe(false);
+                expect(w2.op.isWholeNum(numberWhole)).toBe(true);
+                expect(w2.op.isWholeNum(string)).toBe(false);
+                expect(w2.op.isWholeNum(arr)).toBe(false);
+                expect(w2.op.isWholeNum(obj)).toBe(false);
+                expect(w2.op.isWholeNum(regex)).toBe(false);
+                expect(w2.op.isWholeNum(date)).toBe(false);
+                expect(w2.op.isWholeNum(func)).toBe(false);
+            });
+            it('string', () => {
+                expect(w2.op.isStr()).toBe(false);
+                expect(w2.op.isStr(_undefined)).toBe(false);
+                expect(w2.op.isStr(_null)).toBe(false);
+                expect(w2.op.isStr(_false)).toBe(false);
+                expect(w2.op.isStr(bool)).toBe(false);
+                expect(w2.op.isStr(numberFloat)).toBe(false);
+                expect(w2.op.isStr(numberWhole)).toBe(false);
+                expect(w2.op.isStr(string)).toBe(true);
+                expect(w2.op.isStr(arr)).toBe(false);
+                expect(w2.op.isStr(obj)).toBe(false);
+                expect(w2.op.isStr(regex)).toBe(false);
+                expect(w2.op.isStr(date)).toBe(false);
+                expect(w2.op.isStr(func)).toBe(false);
+            });
+            it('primitive', () => {
+                expect(w2.op.isPrim()).toBe(false);
+                expect(w2.op.isPrim(_undefined)).toBe(false);
+                expect(w2.op.isPrim(_null)).toBe(false);
+                expect(w2.op.isPrim(_false)).toBe(true);
+                expect(w2.op.isPrim(bool)).toBe(true);
+                expect(w2.op.isPrim(numberFloat)).toBe(true);
+                expect(w2.op.isPrim(numberWhole)).toBe(true);
+                expect(w2.op.isPrim(string)).toBe(true);
+                expect(w2.op.isPrim(arr)).toBe(false);
+                expect(w2.op.isPrim(obj)).toBe(false);
+                expect(w2.op.isPrim(regex)).toBe(false);
+                expect(w2.op.isPrim(date)).toBe(false);
+                expect(w2.op.isPrim(func)).toBe(false);
+            });
+            it('array', () => {
+                expect(w2.op.isArr()).toBe(false);
+                expect(w2.op.isArr(_undefined)).toBe(false);
+                expect(w2.op.isArr(_null)).toBe(false);
+                expect(w2.op.isArr(_false)).toBe(false);
+                expect(w2.op.isArr(bool)).toBe(false);
+                expect(w2.op.isArr(numberFloat)).toBe(false);
+                expect(w2.op.isArr(numberWhole)).toBe(false);
+                expect(w2.op.isArr(string)).toBe(false);
+                expect(w2.op.isArr(arr)).toBe(true);
+                expect(w2.op.isArr(obj)).toBe(false);
+                expect(w2.op.isArr(regex)).toBe(false);
+                expect(w2.op.isArr(date)).toBe(false);
+                expect(w2.op.isArr(func)).toBe(false);
+            });
+            it('object', () => {
+                expect(w2.op.isObj()).toBe(false);
+                expect(w2.op.isObj(_undefined)).toBe(false);
+                expect(w2.op.isObj(_null)).toBe(false);
+                expect(w2.op.isObj(_false)).toBe(false);
+                expect(w2.op.isObj(_true)).toBe(false);
+                expect(w2.op.isObj(numberFloat)).toBe(false);
+                expect(w2.op.isObj(numberWhole)).toBe(false);
+                expect(w2.op.isObj(string)).toBe(false);
+                expect(w2.op.isObj(arr)).toBe(false);
+                expect(w2.op.isObj(obj)).toBe(true);
+                expect(w2.op.isObj(regex)).toBe(false);
+                expect(w2.op.isObj(date)).toBe(false);
+                expect(w2.op.isObj(func)).toBe(false);
+            });
+            it('regex', () => {
+                expect(w2.op.isRx()).toBe(false);
+                expect(w2.op.isRx(_undefined)).toBe(false);
+                expect(w2.op.isRx(_null)).toBe(false);
+                expect(w2.op.isRx(_false)).toBe(false);
+                expect(w2.op.isRx(bool)).toBe(false);
+                expect(w2.op.isRx(numberFloat)).toBe(false);
+                expect(w2.op.isRx(numberWhole)).toBe(false);
+                expect(w2.op.isRx(string)).toBe(false);
+                expect(w2.op.isRx(arr)).toBe(false);
+                expect(w2.op.isRx(obj)).toBe(false);
+                expect(w2.op.isRx(regex)).toBe(true);
+                expect(w2.op.isRx(date)).toBe(false);
+                expect(w2.op.isRx(func)).toBe(false);
+            });
+            it('date', () => {
+                expect(w2.op.isDate()).toBe(false);
+                expect(w2.op.isDate(_undefined)).toBe(false);
+                expect(w2.op.isDate(_null)).toBe(false);
+                expect(w2.op.isDate(_false)).toBe(false);
+                expect(w2.op.isDate(bool)).toBe(false);
+                expect(w2.op.isDate(numberFloat)).toBe(false);
+                expect(w2.op.isDate(numberWhole)).toBe(false);
+                expect(w2.op.isDate(string)).toBe(false);
+                expect(w2.op.isDate(arr)).toBe(false);
+                expect(w2.op.isDate(obj)).toBe(false);
+                expect(w2.op.isDate(regex)).toBe(false);
+                expect(w2.op.isDate(date)).toBe(true);
+                expect(w2.op.isDate(func)).toBe(false);
+            });
+            it('function', () => {
+                expect(w2.op.isFn()).toBe(false);
+                expect(w2.op.isFn(_undefined)).toBe(false);
+                expect(w2.op.isFn(_null)).toBe(false);
+                expect(w2.op.isFn(_false)).toBe(false);
+                expect(w2.op.isFn(bool)).toBe(false);
+                expect(w2.op.isFn(numberFloat)).toBe(false);
+                expect(w2.op.isFn(numberWhole)).toBe(false);
+                expect(w2.op.isFn(string)).toBe(false);
+                expect(w2.op.isFn(arr)).toBe(false);
+                expect(w2.op.isFn(obj)).toBe(false);
+                expect(w2.op.isFn(regex)).toBe(false);
+                expect(w2.op.isFn(date)).toBe(false);
+                expect(w2.op.isFn(func)).toBe(true);
+            });
+            it('array of arrays', () => {
+                expect(w2.op.isArrArr(arrarr)).toBe(true);
+                expect(w2.op.isArrArr(arrobj)).toBe(false);
+                expect(w2.op.isArrArr(objarr)).toBe(false);
+                expect(w2.op.isArrArr(objobj)).toBe(false);
+            });
+            it('array of objects', () => {
+                expect(w2.op.isArrObj(arrarr)).toBe(false);
+                expect(w2.op.isArrObj(arrobj)).toBe(true);
+                expect(w2.op.isArrObj(objarr)).toBe(false);
+                expect(w2.op.isArrObj(objobj)).toBe(false);
+            });
+            it('object of arrays', () => {
+                expect(w2.op.isObjArr(arrarr)).toBe(false);
+                expect(w2.op.isObjArr(arrobj)).toBe(false);
+                expect(w2.op.isObjArr(objarr)).toBe(true);
+                expect(w2.op.isObjArr(objobj)).toBe(false);
+            });
+            it('object of objects', () => {
+                expect(w2.op.isObjObj(arrarr)).toBe(false);
+                expect(w2.op.isObjObj(arrobj)).toBe(false);
+                expect(w2.op.isObjObj(objarr)).toBe(false);
+                expect(w2.op.isObjObj(objobj)).toBe(true);
+            });
+            it('blank', () => {
+                expect(w2.op.isBlank()).toBe(true);
+                expect(w2.op.isBlank(_undefined)).toBe(true);
+                expect(w2.op.isBlank(_null)).toBe(true);
+                expect(w2.op.isBlank(_false)).toBe(false);
+                expect(w2.op.isBlank(bool)).toBe(false);
+                expect(w2.op.isBlank(numberFloat)).toBe(false);
+                expect(w2.op.isBlank(numberWhole)).toBe(false);
+                expect(w2.op.isBlank(string)).toBe(false);
+                expect(w2.op.isBlank(arr)).toBe(false);
+                expect(w2.op.isBlank(obj)).toBe(false);
+                expect(w2.op.isBlank(regex)).toBe(false);
+                expect(w2.op.isBlank(date)).toBe(false);
+                expect(w2.op.isBlank(func)).toBe(false);
+                expect(w2.op.isBlank("")).toBe(true);
+                expect(w2.op.isBlank("  ")).toBe(true);
+                expect(w2.op.isBlank("\n")).toBe(true);
+                expect(w2.op.isBlank([])).toBe(true);
+                expect(w2.op.isBlank({})).toBe(true);
+            });
+            it('hexadecimal', () => {
+                expect(w2.op.isHex(string)).toBe(false);
+                expect(w2.op.isHex("0123456789abcdef")).toBe(true);
+                expect(w2.op.isHex("0123456789ABCDEF")).toBe(true);
+            });
+            it('a word', () => {
+                expect(w2.op.isWord(string)).toBe(false);
+                expect(w2.op.isWord(" WoRd 5")).toBe(false);
+                expect(w2.op.isWord("woRdy-word")).toBe(true);
+            });
+            it('an RGB array', () => {
+                expect(w2.op.isRGB(arr)).toBe(true);
+                expect(w2.op.isRGB([1, 2])).toBe(false);
+                expect(w2.op.isRGB([0, "not a number", 255])).toBe(false);
+                expect(w2.op.isRGB([0, 2.7, 255])).toBe(false);
+                expect(w2.op.isRGB([0, 2, 256])).toBe(false);
+                expect(w2.op.isRGB([0, 2, 255])).toBe(true);
+                expect(w2.op.isRGB([-1, 2, 255])).toBe(false);
+            });
+            it('a hex colour code', () => {
+                expect(w2.op.isHexColour(string)).toBe(false);
+                expect(w2.op.isHexColour("1")).toBe(false);
+                expect(w2.op.isHexColour("12")).toBe(false);
+                expect(w2.op.isHexColour("123")).toBe(true);
+                expect(w2.op.isHexColour("1234")).toBe(true);
+                expect(w2.op.isHexColour("12345")).toBe(false);
+                expect(w2.op.isHexColour("123456")).toBe(true);
+                expect(w2.op.isHexColour("1234567")).toBe(false);
+                expect(w2.op.isHexColour("12345678")).toBe(true);
+                expect(w2.op.isHexColour("123456789")).toBe(false);
+                expect(w2.op.isHexColour("#1")).toBe(false);
+                expect(w2.op.isHexColour("#12")).toBe(false);
+                expect(w2.op.isHexColour("#123")).toBe(true);
+                expect(w2.op.isHexColour("#1234")).toBe(true);
+                expect(w2.op.isHexColour("#12345")).toBe(false);
+                expect(w2.op.isHexColour("#123456")).toBe(true);
+                expect(w2.op.isHexColour("#abcdef")).toBe(true);
+                expect(w2.op.isHexColour("#1234567")).toBe(false);
+                expect(w2.op.isHexColour("#12345678")).toBe(true);
+                expect(w2.op.isHexColour("#123456789")).toBe(false);
+            });
+            it('a regex flag', () => {
+                expect(w2.op.isRxFlag(regex, "foo")).toBe(false);
+                expect(w2.op.isRxFlag(regex, "gim")).toBe(false);
+                expect(w2.op.isRxFlag(regex, "i")).toBe(true);
+                expect(w2.op.isRxFlag(regex, "g")).toBe(true);
+                expect(w2.op.isRxFlag(regex, "m")).toBe(true);
+                expect(w2.op.isRxFlag(/foo/s, "s")).toBe(true);
+                expect(w2.op.isRxFlag(/foo/, "i")).toBe(false);
+                expect(w2.op.isRxFlag(/foo/, "")).toBe(false);
+            });
+            it('or', () => {
+                expect(w2.op.or(1, arr)).toBe(true);
+                expect(w2.op.or(3, arr)).toBe(true);
+                expect(w2.op.or(1, [1, "foo", 3])).toBe(true);
+                expect(w2.op.or("foo", [1, "foo", 3])).toBe(true);
+                expect(w2.op.or(3, [1, "foo", 3])).toBe(true);
+                expect(w2.op.or(5, [1, "foo", 3])).toBe(false);
+                expect(w2.op.or(9, [1, "foo", 3])).toBe(false);
+                expect(w2.op.or("hey", [1, "foo", 3])).toBe(false);
+            });
+        });
+    </script>
+</body>
+
+</html>
