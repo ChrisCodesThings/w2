@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        BODY {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+    </style>
+
+    <link rel="stylesheet" href="jasmine-standalone-5.1.1/lib/jasmine-5.1.1/jasmine.css">
+
+    <script src="jasmine-standalone-5.1.1/lib/jasmine-5.1.1/jasmine.js"></script>
+    <script src="jasmine-standalone-5.1.1/lib/jasmine-5.1.1/jasmine-html.js"></script>
+    <script src="jasmine-standalone-5.1.1/lib/jasmine-5.1.1/boot0.js"></script>
+    <script src="jasmine-standalone-5.1.1/lib/jasmine-5.1.1/boot1.js"></script>
+
+    <script>jasmine.getEnv().configure({ random: false });</script>
+
+    <script src='../w2.js'></script>
+    <title>Wheel 2 Testing</title>
+</head>
+
+<body>
+    <h1>Wheel 2 Testing</h1>
+    <h2>Strings</h2>
+    <script>
+        describe('With strings...', () => {
+            it('non-alpha trim', () => {
+                expect(w2.str.naTrim(";'#/.,", false)).toBe("");
+                expect(w2.str.naTrim("hello world")).toBe("hello world");
+                expect(w2.str.naTrim("'hello world'")).toBe("hello world");
+                expect(w2.str.naTrim(" hello world ")).toBe("hello world");
+                expect(w2.str.naTrim(" \" hello world \" ")).toBe("hello world");
+                expect(w2.str.naTrim(")(*&^hello world)(*&^")).toBe("hello world");
+                expect(w2.str.naTrim(")(*&#####^hello world)(*&#####^")).toBe("hello world");
+                expect(w2.str.naTrim("'.hello world.'")).toBe("hello world.");
+                expect(w2.str.naTrim(" !hello world! ")).toBe("hello world!");
+                expect(w2.str.naTrim(" \" ?hello world? \" ")).toBe("hello world?");
+            });
+            it('left', () => {
+                expect(w2.str.left("hello world", 0)).toBe("");
+                expect(w2.str.left("hello world", 4)).toBe("hell");
+                expect(w2.str.left("hello world", 99)).toBe("hello world");
+                expect(w2.str.left("hello world", -4)).toBe("hello w");
+                expect(w2.str.left("hello world", -0)).toBe("");
+                expect(w2.str.left("hello world", -99)).toBe("");
+            });
+            it('right', () => {
+                expect(w2.str.right("hello world", 0)).toBe("");
+                expect(w2.str.right("hello world", 4)).toBe("orld");
+                expect(w2.str.right("hello world", 99)).toBe("hello world");
+                expect(w2.str.right("hello world", -4)).toBe("o world");
+                expect(w2.str.right("hello world", -0)).toBe("");
+                expect(w2.str.right("hello world", -99)).toBe("");
+            });
+            it('mid', () => {
+                expect(w2.str.mid("hello world", 3)).toBe("lo world");
+                expect(w2.str.mid("hello world", 0, 5)).toBe("hello");
+                expect(w2.str.mid("hello world", 2, 5)).toBe("llo w");
+                expect(w2.str.mid("hello world", 2, -2)).toBe("llo wor");
+                expect(w2.str.mid("hello world", 99)).toBe("");
+            });
+            it('before', () => {
+                expect(w2.str.before("hello world")).toBe("hello world");
+                expect(w2.str.before("hello world", " ")).toBe("hello");
+                expect(w2.str.before("hello world", "o w")).toBe("hell");
+                expect(w2.str.before("hello world", "blob")).toBe("hello world");
+            });
+            it('after', () => {
+                expect(w2.str.after("hello world")).toBe("");
+                expect(w2.str.after("hello world", " ")).toBe("world");
+                expect(w2.str.after("hello world", "o w")).toBe("orld");
+                expect(w2.str.after("hello world", "nothing")).toBe("");
+            });
+            it('count', () => {
+                expect(w2.str.count("hello world")).toBe(0);
+                expect(w2.str.count("hello world", "h")).toBe(1);
+                expect(w2.str.count("hello world", "o")).toBe(2);
+                expect(w2.str.count("hello world", "l")).toBe(3);
+                expect(w2.str.count("hello world", "hello")).toBe(1);
+                expect(w2.str.count("hello world", "nothing")).toBe(0);
+            });
+            it('reverse', () => {
+                expect(w2.str.reverse()).toBe("");
+                expect(w2.str.reverse("")).toBe("");
+                expect(w2.str.reverse("h")).toBe("h");
+                expect(w2.str.reverse("abba")).toBe("abba");
+                expect(w2.str.reverse("hello world")).toBe("dlrow olleh");
+            });
+            it('deQuote', () => {
+                expect(w2.str.deQuote()).toBe("");
+                expect(w2.str.deQuote("hello world")).toBe("hello world");
+                expect(w2.str.deQuote(" hello world ")).toBe("hello world");
+                expect(w2.str.deQuote(" \"hello world ")).toBe("\"hello world");
+                expect(w2.str.deQuote(" 'hello world' ")).toBe("hello world");
+                expect(w2.str.deQuote("' hello world '")).toBe("hello world");
+                expect(w2.str.deQuote(" \" hello world \" ")).toBe("hello world");
+                expect(w2.str.deQuote(" \" hello world ' ")).toBe("\" hello world '");
+            });
+            it('capitalizeWord', () => {
+                expect(w2.str.capitalizeWord()).toBe();
+                expect(w2.str.capitalizeWord("hello world")).toBe("hello world");
+                expect(w2.str.capitalizeWord("hello")).toBe("Hello");
+                expect(w2.str.capitalizeWord("hello-world")).toBe("Hello-world");
+            });
+            // it('test', () => {
+            // });
+            // it('test', () => {
+            // });
+            // it('test', () => {
+            // });
+            // it('test', () => {
+            // });
+            // it('test', () => {
+            // });
+        });
+    </script>
+</body>
+
+</html>

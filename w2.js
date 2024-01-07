@@ -228,6 +228,9 @@
             get(target, key, receiver) {
                 if (key == "load") {
                     return (something) => {
+                        if (!(something.constructor.toString().startsWith(`class /* ${mod.shortname} */ `)))
+                            return;
+
                         window[window['__wheel2_locator']][mod.shortname] = something;
                     };
                 }

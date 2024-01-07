@@ -29,7 +29,7 @@
 // rxFlags( r) - returns a string containing flags attached to a Regular Expression
 // isRxFlag( rx, c) - returns true/false if c is present in Regular Expression (rx) flags
 
-window[window['__wheel2_locator']].op.load(new class {
+window[window['__wheel2_locator']].op.load(new class /* op */ {
 	// Nullish things
 	isUndef(x) { return typeof x === 'undefined' }
 	isNull(x) { return x === null; }
@@ -107,9 +107,8 @@ window[window['__wheel2_locator']].op.load(new class {
 		for (let i = 0; i < x.length; i++) {
 			const code = x.charCodeAt(i);
 
-			if (!(code >= 97 && code <= 102)		// a-f
-				&& !(code >= 65 && code <= 70)		// A-F
-				&& !(code >= 48 && code <= 57)) {	// 0-9
+			// a-f, A-F, 0-9
+			if (!((code >= 97 && code <= 102) || (code >= 65 && code <= 70) || (code >= 48 && code <= 57))) {
 				return false;
 			}
 		}
@@ -122,9 +121,9 @@ window[window['__wheel2_locator']].op.load(new class {
 
 		for (let i = 0; i < x.length; i++) {
 			const code = x.charCodeAt(i);
-			if (!(code >= 65 && code <= 90)		// A-Z
-				&& !(code >= 97 && code <= 122)	// a-z
-				&& !(code == 45)) {				// -
+
+			// a-z, A-Z, -
+			if (!((code >= 97 && code <= 122) || (code >= 65 && code <= 90) || code == 45)) {
 				return false;
 			}
 		}
