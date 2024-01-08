@@ -104,16 +104,47 @@
                 expect(w2.str.capitalizeWord("hello")).toBe("Hello");
                 expect(w2.str.capitalizeWord("hello-world")).toBe("Hello-world");
             });
-            // it('test', () => {
-            // });
-            // it('test', () => {
-            // });
-            // it('test', () => {
-            // });
-            // it('test', () => {
-            // });
-            // it('test', () => {
-            // });
+            it('split at', () => {
+                expect(w2.str.splitAt()).toEqual(["", ""]);
+                expect(w2.str.splitAt("hello world", 5)).toEqual(["hello", " world"]);
+                expect(w2.str.splitAt("hello world", 0)).toEqual(["", "hello world"]);
+                expect(w2.str.splitAt("hello world", 99)).toEqual(["hello world", ""]);
+                expect(w2.str.splitAt("hello world", -4)).toEqual(["hello w", "orld"]);
+                expect(w2.str.splitAt("hello world", -99)).toEqual(["", "hello world"]);
+                expect(w2.str.splitAt("hello world", "nothing")).toEqual(["hello world", ""]);
+                expect(w2.str.splitAt("hello world", "hell")).toEqual(["", "o world"]);
+                expect(w2.str.splitAt("hello world", "o w")).toEqual(["hell", "orld"]);
+                expect(w2.str.splitAt("hello world", "world")).toEqual(["hello ", ""]);
+                expect(w2.str.splitAt("hello world", "o")).toEqual(["hell", " world"]);
+            });
+            it('chop', () => {
+                expect(w2.str.chop()).toBe("");
+                expect(w2.str.chop("hello world", 0, 0)).toBe("hello world");
+                expect(w2.str.chop("hello world", 0, 99)).toBe("");
+                expect(w2.str.chop("hello world", 0, -99)).toBe("hello world");
+                expect(w2.str.chop("hello world", 2, 3)).toBe("he world");
+                expect(w2.str.chop("hello world", 99, 2)).toBe("hello world");
+                expect(w2.str.chop("hello world", 99, -3)).toBe("hello world");
+                expect(w2.str.chop("hello world", 11, -3)).toBe("hello world");
+            });
+            it('splice', () => {
+                expect(w2.str.splice()).toEqual([, ""]);
+                expect(w2.str.splice("hello world", /nothing/)).toEqual(["hello world", []]);
+                expect(w2.str.splice("hello world", /hello/)).toEqual([" world", ["hello"]]);
+                expect(w2.str.splice("hello world", /o w/)).toEqual(["hellorld", ["o w"]]);
+                expect(w2.str.splice("hello world", /world/)).toEqual(["hello ", ["world"]]);
+                expect(w2.str.splice("hello world", /l/)).toEqual(["helo world", ["l"]]);
+                expect(w2.str.splice("hello world", /l/g)).toEqual(["heo word", ["l", "l", "l"]]);
+                expect(w2.str.splice("hello world", 0, 0)).toEqual(["hello world", ""]);
+                expect(w2.str.splice("hello world", 0, 99)).toEqual(["", "hello world"]);
+                expect(w2.str.splice("hello world", 0, -99)).toEqual(["hello world", ""]);
+                expect(w2.str.splice("hello world", 0, 4)).toEqual(["o world", "hell"]);
+                expect(w2.str.splice("hello world", 6, 5)).toEqual(["hello ", "world"]);
+                expect(w2.str.splice("hello world", 2, 3)).toEqual(["he world", "llo"]);
+                expect(w2.str.splice("hello world", 99, 2)).toEqual(["hello world", ""]);
+                expect(w2.str.splice("hello world", 99, -3)).toEqual(["hello world", ""]);
+                expect(w2.str.splice("hello world", 11, -3)).toEqual(["hello world", ""]);
+            });
         });
     </script>
 </body>

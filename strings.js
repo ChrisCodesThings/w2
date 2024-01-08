@@ -1,17 +1,17 @@
 // w2.str:
 
-// naTrim(str, p (optional)) - trims non alpha characters from ends of string
+// naTrim(str, p?) - trims non alpha characters from ends of string
 // p - true/false - default true - allow ending punctuation ? ! .
 
 // last(str) - return last character of str
 
 // left(str, n) - return characters from left of str
-// n - number of characters. 
+// n - number of characters.
 // n > 0 - n characters from left
 // n < 0 - characters up to length -n
 
 // right(str, n) - return characters from right of str
-// n - number of characters. 
+// n - number of characters.
 // n > 0 - n characters from right
 // n < 0 - characters from length -n
 
@@ -28,27 +28,24 @@
 // reverse(str) - reverses str
 
 // deQuote(str) - trim and remove double or single quote marks from s, if present
-// capitalize(str) - capitalize first letter of each word in t
+// capitalizeWord(w) - capitalizes the first letter of a word
+// capitalize(str) - capitalize first letter of each word in str
 
-// splice( str, x, y) - return and remove characters from str
-// x is string: match string
-// x is number, y is null: x > 0 - characters from left
-// x is number, y is null: x < 0 - characters from right
-// x is number, y is number - y characters from position starting from x
-// x is RegExp - matches Regular Expression, returned removed text as array of matches
-// Returns: [ removed text, remaining text]
+// splitAt(str, x) - splits string str at position x
+// x is string - splits either side of string
+// x is number - splits at that index
+// Returns: [left, right]
 
 // chop( str, x, y) - remove characters from str
-// x is string - remove string from str
-// x > 0, y is null - remove x characters from start of string
-// x < 0, y is null - remove x characters from end of string
-// x, y - remove y characters from position starting from x
+// x, y > 0 - remove y characters at position x
+// x, y < 0 - remove length -y characters at position x
 // Returns: str with characters removed
 
-// splitAt( s, i) - splits string s at position i
-// i is string - splits either side of string
-// i is number - splits at that index
-// Returns: [left, right]
+// splice( str, x, y?) - return and remove characters from str
+// x is Regex - matches Regular Expression, returned removed text as array of matches
+// x is number, y > 0 - remove y characters at position x
+// x is number, y < 0 - remove length -y characters at position x
+// Returns: [ remaining text, removed text]
 
 
 window[window['__wheel2_locator']].str.load(new class /* str */ {
@@ -105,7 +102,8 @@ window[window['__wheel2_locator']].str.load(new class /* str */ {
 	before(str, s) {
 		if (!this.#w2.op.isStr(str)) return "";
 		if (!this.#w2.op.isStr(s)) return str;
-		return str.substr(0, str.indexOf(s)) || str;
+		const p = str.indexOf(s);
+		return p >= 0 ? str.substr(0, p) : str;
 	}
 
 	after(str, s) {
@@ -144,6 +142,7 @@ window[window['__wheel2_locator']].str.load(new class /* str */ {
 	}
 
 	capitalize(str) {
+		if (!this.#w2.op.isStr(str)) return str;
 		let words = str.split(" ");
 
 		for (let i = 0; i < words.length; i++) {
@@ -153,102 +152,43 @@ window[window['__wheel2_locator']].str.load(new class /* str */ {
 		return words.join(" ");
 	}
 
-	splitAt(s, i) {
-		let l, r;
+	splitAt(str, x) {
+		if (!this.#w2.op.isStr(str)) return ["", ""];
 
-		if (this.#w2.op.isStr(i)) {
-			return [this.before(s, i), this.after(s, i)];
+		if (this.#w2.op.isStr(x)) {
+			return [this.before(str, x), this.after(str, x)];
 		}
 
-		return [this.left(s, i), this.right(s, -i)];
+		return [this.left(str, x), str.slice(x)];
 	}
 
 	chop(str, x, y) {
-		let start = 0;
-		let end = str.length;
+		if (!this.#w2.op.isStr(str)) return "";
+		return str.replace(y >= 0 ? str.substr(x, y) : str.slice(x, y), "");
+	}
 
-		if (this.#w2.op.isStr(x)) {
-			return this.splitAt(str, x).join("");
+	#spliceRx(str, rx) {
+		let matches = [];
+
+		for (let m of str.match(rx) || []) {
+			matches.push(m);
+			str = str.replace(m, "");
 		}
 
-		if (x > 0 && !y) {
-			end = x;
+		return [str, matches];
+	}
 
-		} else if (x < 0 && !y) {
-			start = end + x;
-
-		} else {
-			start = x;
-			end = x + y;
-		}
-
-		return str.substr(0, start) + str.substr(end);
+	#spliceXY(str, x, y) {
+		const s = y >= 0 ? str.substr(x, y) : str.slice(x, y);
+		return [str.replace(s, ""), s];
 	}
 
 	splice(str, x, y) {
-		let start = 0;
-		let end = 0;
-		let matches = [];
-
-		if (this.#w2.op.isStr(x)) {
-			start = str.indexOf(x);
-			end = start + x.length;
-
-			if (start < 0) {
-				return ["", str];
-			}
-
-		} else if (this.#w2.op.isNum(x)) {
-			if (!y && x > 0) {
-				start = 0;
-				end = x;
-
-			} else if (!y && x < 0) {
-				start = str.length - (-x);
-				end = str.length;
-
-			} else if (this.#w2.op.isNum(y)) {
-				[start, end] = [x, x + y];
-			}
-
-		} else if (this.#w2.op.isRgx(x)) {
-			let mm = str.match(x);
-
-			if (mm === null) {
-				return ["", str];
-			}
-
-			if (!this.#w2.op.isRxFlag(x, "g")) {
-				return this.splice(str, mm[0]);
-			}
-
-			for (let m of mm) {
-				let match;
-				[match, str] = this.splice(str, m);
-				matches.push(match);
-			}
-
-			return [matches, str];
+		if (this.#w2.op.isStr(str)) {
+			if (this.#w2.op.isRx(x)) return this.#spliceRx(str, x);
+			if (this.#w2.op.isWholeNum(x) && this.#w2.op.isWholeNum(y)) return this.#spliceXY(str, x, y);
 		}
 
-		let removed = str.substring(start, end);
-		let remain = str.substr(0, start) + str.substr(end);
-
-		return [removed, remain];
+		return [str, ""];
 	}
 });
-
-
-function test(str) {
-	let code = str.charCodeAt(0);
-	while (
-		!(code >= 65 && code <= 90)
-		&& !(code >= 97 && code <= 122)
-		&& !(code >= 48 && code <= 57)
-	) {
-		str = str.slice(1);
-		code = str.charCodeAt(0);
-	}
-
-	return str;
-}
