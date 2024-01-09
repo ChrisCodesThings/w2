@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        BODY {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+    </style>
+
+    <link rel="stylesheet" href="jasmine-standalone-5.1.1/lib/jasmine-5.1.1/jasmine.css">
+
+    <script src="jasmine-standalone-5.1.1/lib/jasmine-5.1.1/jasmine.js"></script>
+    <script src="jasmine-standalone-5.1.1/lib/jasmine-5.1.1/jasmine-html.js"></script>
+    <script src="jasmine-standalone-5.1.1/lib/jasmine-5.1.1/boot0.js"></script>
+    <script src="jasmine-standalone-5.1.1/lib/jasmine-5.1.1/boot1.js"></script>
+
+    <script>jasmine.getEnv().configure({ random: false });</script>
+
+    <script src='../w2.js'></script>
+    <title>Wheel 2 Testing</title>
+</head>
+
+<body>
+    <h1>Wheel 2 Testing</h1>
+    <h2>Arrays</h2>
+    <script>
+        describe('With arrays...', () => {
+            it('last', () => {
+                expect(w2.arr.last([1, 2, 3])).toEqual(3);
+            });
+            it('pusharr', () => {
+                expect(w2.arr.pushArr([1, 2, 3], [4, 5, 6])).toEqual([1, 2, 3, 4, 5, 6]);
+            });
+            it('shove', () => {
+                expect(w2.arr.shove([1, 2, 3], 4, 5, 6, [7, 8, 9, [10, 11, 12], "foo"]))
+                    .toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, "foo"]);
+            });
+            it('withEach', () => {
+                expect(w2.arr.withEach([1, 2, 3], i => { return i + 1; })).toEqual([2, 3, 4]);
+            });
+            it('deblank', () => {
+                expect(w2.arr.deBlank([1, 2, null, 3, " ", 4, , 5])).toEqual([1, 2, 3, 4, 5]);
+            });
+            it('trim', () => {
+                expect(w2.arr.trim(["one ", "two", "  three", "four "]))
+                    .toEqual(["one", "two", "three", "four"]);
+            });
+
+            const arrarr = [
+                [1, 2, 3, 4, 5],
+                [6, 7, 8, 9, 0]
+            ];
+
+            it('min', () => {
+                expect(w2.arr.min(arrarr[0])).toBe(1);
+                expect(w2.arr.min(arrarr[1])).toBe(0);
+                expect(w2.arr.min(arrarr, 1)).toBe(2);
+                expect(w2.arr.min(arrarr, 4)).toBe(0);
+                expect(w2.arr.min(arrarr)).toBe(0);
+            });
+            it('max', () => {
+                expect(w2.arr.max(arrarr[0])).toBe(5);
+                expect(w2.arr.max(arrarr[1])).toBe(9);
+                expect(w2.arr.max(arrarr, 1)).toBe(7);
+                expect(w2.arr.max(arrarr, 4)).toBe(5);
+                expect(w2.arr.max(arrarr)).toBe(9);
+            });
+            it('extract', () => {
+                expect(w2.arr.extract(arrarr, 1)).toEqual([2, 7]);
+                expect(w2.arr.extract(arrarr, 4)).toEqual([5, 0]);
+            });
+            it('dedupe', () => {
+                expect(w2.arr.deDupe([1, 2, 2, 3, 4, 5, 5])).toEqual([1, 2, 3, 4, 5]);
+                expect(w2.arr.deDupe(["hello", "world", "foo", "foo", "bar", "bar"]))
+                    .toEqual(["hello", "world", "foo", "bar"]);
+            });
+        });
+    </script>
+</body>
+
+</html>

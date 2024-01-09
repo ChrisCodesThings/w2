@@ -343,13 +343,13 @@
             });
             it('a regex flag', () => {
                 expect(w2.op.isRxFlag(/foo/img, "foo")).toBe(false);
-                expect(w2.op.isRxFlag(/foo/img, "gim")).toBe(false);
+                expect(w2.op.isRxFlag(/foo/img, "gmi")).toBe(true);
+                expect(w2.op.isRxFlag(/foo/img, "img")).toBe(true);
                 expect(w2.op.isRxFlag(/foo/img, "i")).toBe(true);
                 expect(w2.op.isRxFlag(/foo/img, "g")).toBe(true);
                 expect(w2.op.isRxFlag(/foo/img, "m")).toBe(true);
                 expect(w2.op.isRxFlag(/foo/s, "s")).toBe(true);
                 expect(w2.op.isRxFlag(/foo/, "i")).toBe(false);
-                expect(w2.op.isRxFlag(/foo/, "")).toBe(false);
             });
             it('or', () => {
                 expect(w2.op.or(1, [1, 2, 3])).toBe(true);

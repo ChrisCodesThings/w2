@@ -92,12 +92,12 @@ window[window['__wheel2_locator']].op.load(new class /* op */ {
 
 	/* Data type tests */
 	isBlank(x) {
-		if (this.isNull(x)) return true;
+		if (this.isNullish(x)) return true;
 		if (this.isStr(x)) return !x.trim();
 		if (this.isArr(x)) return !x.length;
 		if (this.isObj(x)) return !Object.keys(x).length;
 
-		return this.isUndef(x);
+		return false;
 	}
 
 	isHex(x) {
@@ -159,8 +159,14 @@ window[window['__wheel2_locator']].op.load(new class /* op */ {
 
 	isRxFlag(rx, c) {
 		if (!this.isRx(rx)) return false;
-		if (!this.isStr(c) || c.length != 1) return false;
-		return rx.flags.indexOf(c.toLowerCase()) !== -1;
+
+		for (let f of c) {
+			if (rx.flags.indexOf(f.toLowerCase()) == -1) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	or(x, a) {
